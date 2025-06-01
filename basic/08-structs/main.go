@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"go-journey/basic/08-structs/utils"
+)
 
 func main() {
-	fmt.Println("Hello world")
+	utils.CallStructsLearnSection()
 }
