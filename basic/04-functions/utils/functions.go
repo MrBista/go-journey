@@ -41,6 +41,12 @@ func CallFunctionLearnSection() {
 
 	resAdd, errAdd := addFunc(2, 3)
 
+	substractionFunc := getOperation("-")
+
+	resSubs, errSubs := substractionFunc(10, 2) // curryig function
+
+	fmt.Println("Hasil dari pengurangan 10 - 2", resSubs, errSubs)
+
 	fmt.Println("resAdd", resAdd, "errAdd", errAdd)
 }
 

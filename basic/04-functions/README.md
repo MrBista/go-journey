@@ -48,11 +48,11 @@ Parameter untuk defer dievaluasi saat defer dipanggil, bukan saat dieksekusi
 hindari call deffer function di for loop karena bisa menyebabkan memory leek
 
 
-Panic
+Panic (Throw)
 panic adalah mekanisme di GoLang yang digunakan untuk menangani kesalahan yang sifatnya tidak dapat dipulihkan (unrecoverable errors). Ketika sebuah panic terjadi, eksekusi program normal akan berhenti, dan fungsi-fungsi yang ditunda (defer) akan dieksekusi. Setelah semua defer dieksekusi, program akan berhenti (crash) dan mencetak stack trace (urutan panggilan fungsi yang mengarah ke panic).
 
 
-Recover
+Recover (Catch)
 Apa itu Recover?
 
 recover adalah fungsi built-in di GoLang yang digunakan untuk menangkap atau mengatasi panic yang sedang berlangsung. recover hanya efektif jika dipanggil di dalam sebuah fungsi defer. Jika recover dipanggil di luar defer, ia tidak akan melakukan apa-apa dan mengembalikan nil.
