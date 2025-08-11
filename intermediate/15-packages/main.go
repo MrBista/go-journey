@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	_ "go-journey/intermediate/15-packages/db"
+	u "go-journey/intermediate/15-packages/utils"
+)
 
-func LearnPackages() {
+func main() {
 	fmt.Println("Hallo dunia package")
+
+	u.CallPackageLearn()
+
+	// db.GetConnection()
+
 }
