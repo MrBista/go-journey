@@ -1,5 +1,7 @@
 # Panduan Lengkap Testing di Go untuk Pemula
 
+#### LINK LEARN: https://docs.google.com/presentation/d/1XxMEaA-JsPHr9BUw2oIOPlEL_psI3EaUFUpuvdlDB_Q/edit?slide=id.p#slide=id.p 
+
 ## 1. Konsep Dasar Testing di Go
 
 ### Mengapa Testing Penting?
