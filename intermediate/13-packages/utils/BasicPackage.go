@@ -2,7 +2,7 @@ package utils
 
 import (
 	"fmt"
-	m "go-journey/intermediate/15-packages/math"
+	m "go-journey/intermediate/13-packages/math"
 )
 
 func CallPackageLearn() {
