@@ -9,6 +9,8 @@ Bayangkan Anda sedang memasak di dapur:
 - **Tanpa goroutines**: Anda masak nasi dulu sampai selesai, baru masak sayur, baru masak lauk
 - **Dengan goroutines**: Anda masak nasi, sambil menunggu nasi matang, Anda masak sayur dan lauk secara bersamaan
 
+Analogi diatas merupakan konsep concurentcy
+
 Goroutines memungkinkan program Go menjalankan beberapa tugas secara **bersamaan** (concurrent).
 
 ### Karakteristik Goroutines:
