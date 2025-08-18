@@ -2,6 +2,19 @@
 
 #### LINK LEARN: https://docs.google.com/presentation/d/1XxMEaA-JsPHr9BUw2oIOPlEL_psI3EaUFUpuvdlDB_Q/edit?slide=id.p#slide=id.p 
 
+## 0. Chetseet
+```
+nama file harus diakhiri dengan _test
+nama function harus diawali dengan Test untuk benchmark diawali dengan Benchmark
+go test -v // melihat test apa aja yang udh di runing, v ini verbous
+go test -v -run TestNameFunction
+go test ./... //untuk menjalankan semua Test di folder module sekarang
+
+go test -v -bench=. // menjalankan benchmark
+go test -v -run=NoFunctionTest -bench=. // kalau ga ingin menjlankan uni test dan hanya benchmark saja
+
+```
+
 ## 1. Konsep Dasar Testing di Go
 
 ### Mengapa Testing Penting?
