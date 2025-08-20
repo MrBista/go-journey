@@ -38,6 +38,9 @@ func TestSelectChanel(t *testing.T) {
 	ch1 := make(chan string)
 	ch2 := make(chan string)
 
+	defer close(ch1)
+	defer close(ch2)
+
 	go func() {
 		ch1 <- "Mengirim data chanel pertama"
 	}()
