@@ -1,5 +1,8 @@
 # Panduan Lengkap JSON Handling di Go untuk Pemula
 
+
+### PZN MATERI: https://docs.google.com/presentation/d/1mGVdO7Khmiw-9lDmkCWqd9l5_UqohKRkpHbjabRD--U/edit?slide=id.p#slide=id.p
+
 ## 1. Pengenalan JSON di Go
 
 JSON (JavaScript Object Notation) adalah format pertukaran data yang sangat populer dalam pengembangan aplikasi modern. Go menyediakan package `encoding/json` yang sangat powerful untuk menangani operasi JSON.
