@@ -214,6 +214,16 @@ func main() {
 2. `defer wg.Done()` - Ketika function selesai, beritahu WaitGroup
 3. `wg.Wait()` - Tunggu sampai semua goroutines memanggil `Done()`
 
+
+### Rule of Thumb:
+
+1. Add() harus dipanggil sebelum go (di main thread)
+2. Done() dipanggil di dalam goroutine (biasanya dengan defer)
+3. Wait() dipanggil setelah semua goroutine dimulai
+
+Jadi urutan yang benar:
+```Add() → go routine() → Wait() → Done() (Done ini di dalam goroutine)```
+
 ## 7. Contoh dengan Anonymous Function
 
 ```go
