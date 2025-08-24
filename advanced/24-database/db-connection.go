@@ -8,7 +8,7 @@ import (
 )
 
 func GetConnection() *sql.DB {
-	db, err := sql.Open("mysql", "bisma:bisma@tcp(127.0.0.1:4000)/main_database")
+	db, err := sql.Open("mysql", "bisma:bisma@tcp(127.0.0.1:4000)/main_database?parseTime=true")
 
 	if err != nil {
 		panic(err)

@@ -11,20 +11,42 @@ import (
 	"github.com/MrBista/go-journey/advanced/24-database/entity"
 )
 
-// ddl
+func preaperStatmentSelectCustomer(ctx context.Context, db *sql.DB) *sql.Stmt {
+	script := "SELECT id, name, email, balance, rating, birth_date, married, created_at FROM customer"
 
-func TestQueryContext(t *testing.T) {
+	// ! Di close di function yang mengunakan prepare statment ini
+	// db := database.GetConnection()
+
+	// defer db.Close()
+
+	// ctx := context.Background()
+
+	statement, err := db.PrepareContext(ctx, script)
+
+	if err != nil {
+		panic(err)
+	}
+	// defer statement.Close()
+
+	return statement
+
+}
+
+func TestPrepareStatmentGet(t *testing.T) {
 	db := database.GetConnection()
 
 	defer db.Close()
 
 	ctx := context.Background()
 
-	rows, err := db.QueryContext(ctx, "SELECT id, name, email, balance, rating, birth_date, married, created_at FROM customer")
+	getDataByStatment := preaperStatmentSelectCustomer(ctx, db)
+
+	rows, err := getDataByStatment.QueryContext(ctx)
+
 	if err != nil {
-		// panic(err)
-		t.Errorf("Terjadi keslahan saat select ke customer table: %v", err)
+		t.Errorf("Terjadi kesalahan saat read context %v", err)
 	}
+
 	defer rows.Close()
 
 	var listCustomer []entity.Customer
@@ -55,13 +77,12 @@ func TestQueryContext(t *testing.T) {
 
 	}
 
-	fmt.Println("list customer: ", listCustomer)
-
-	data, err := json.Marshal(listCustomer)
+	result, err := json.Marshal(listCustomer)
 
 	if err != nil {
-		t.Errorf("Terjadi kesalahan saat membuat format ke json %v", err)
+		t.Errorf("Terjadi kesalahan : %v", err)
+
 	}
 
-	fmt.Println(string(data))
+	fmt.Println(string(result))
 }
