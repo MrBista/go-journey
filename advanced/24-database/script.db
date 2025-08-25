@@ -14,3 +14,12 @@ ALTER TABLE customer
     ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ADD COLUMN birth_date DATE,
     ADD COLUMN married BOOLEAN DEFAULT false;
+
+
+
+CREATE TABLE users
+(
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    PRIMARY KEY(username)
+) ENGINE = InnoDB;
