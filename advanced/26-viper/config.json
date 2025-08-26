@@ -1,0 +1,10 @@
+{
+    "app": {
+        "name": "Belajar go viper"
+    },
+    "database": {
+        "show_sql": true,
+        "host": "localhost",
+        "port": 3306
+    }
+}

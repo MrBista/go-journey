@@ -1,0 +1,7 @@
+app:
+  name: "app-viper-yaml"
+
+database:
+  show_sql: true
+  host: "localhost"
+  port: 3306
