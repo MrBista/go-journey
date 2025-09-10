@@ -239,3 +239,55 @@ func TestStructCondition(t *testing.T) {
 	assert.Nil(t, result.Error)
 	fmt.Println(userCondition)
 }
+
+func TestMapCondition(t *testing.T) {
+	// beda nya dengan struct condition adalah struct condition ga bisa kondisi zero value atau kosong
+
+	mapCondition := map[string]interface{}{
+		"middle_name": "",
+	}
+
+	var users []models.User
+
+	result := db.Where(mapCondition).Find(&users)
+
+	assert.Nil(t, result.Error)
+	fmt.Println(users)
+}
+
+func TestOrderLimitOffest(t *testing.T) {
+	var users []models.User
+	result := db.Order("id asc, first_name asc").Limit(5).Offset(5).Find(&users)
+
+	assert.Nil(t, result.Error)
+	fmt.Println(users)
+}
+
+type UserResponse struct {
+	ID        int
+	Firstname string
+	LastName  string
+}
+
+func TestQueryNonModel(t *testing.T) {
+	var users []UserResponse
+
+	result := db.Model(&models.User{}).Select("id", "first_name", "last_name").Find(&users)
+
+	assert.Nil(t, result.Error)
+	fmt.Println(users)
+}
+
+func TestUpdate(t *testing.T) {
+	user := models.User{}
+
+	result := db.Take(&user, "id = ?", 1)
+
+	assert.Nil(t, result.Error)
+
+	user.Name.FirstName = "Berau"
+	user.Password = "terubah"
+
+	result = db.Save(&user)
+	assert.Nil(t, result.Error)
+}
