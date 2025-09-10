@@ -2,6 +2,7 @@ package gormbelajar
 
 import (
 	"belajar-golang-gorm/models"
+	"fmt"
 	"strconv"
 	"testing"
 
@@ -9,6 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 func OpenConnection() *gorm.DB {
@@ -16,7 +18,9 @@ func OpenConnection() *gorm.DB {
 	dsn := "bisma:bisma@tcp(127.0.0.1:4000)/main_database?charset=utf8mb4&parseTime=True&loc=Local" // bisa ambil config dari viper
 	dialect := mysql.Open(dsn)
 
-	db, err := gorm.Open(dialect, &gorm.Config{})
+	db, err := gorm.Open(dialect, &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 
 	if err != nil {
 
@@ -110,4 +114,128 @@ func TestBatchInsert(t *testing.T) {
 	assert.Nil(t, err)
 
 	assert.Equal(t, 10, int(result.RowsAffected))
+}
+
+func TestTransaction(t *testing.T) {
+	err := db.Transaction(func(tx *gorm.DB) error {
+		user := models.User{
+			Password: "rahasia-negara",
+			Name: models.Name{
+				FirstName:  "Mas",
+				MiddleName: "Bisman",
+				LastName:   "Baru",
+			},
+		}
+
+		err := tx.Create(&user).Error
+
+		if err != nil {
+			return err
+		}
+
+		return nil
+
+	})
+
+	assert.Nil(t, err)
+}
+
+func TestQuerySingleObject(t *testing.T) {
+	user := models.User{}
+	result := db.First(&user)
+
+	assert.Nil(t, result.Error)
+	assert.Equal(t, 1, user.ID)
+
+	user = models.User{}
+	result = db.Take(&user, "id = ?", 5)
+	assert.Nil(t, result.Error)
+	assert.Equal(t, 5, user.ID)
+
+	user = models.User{}
+	result = db.Last(&user)
+	assert.Nil(t, result.Error)
+	assert.Equal(t, 15, user.ID)
+}
+
+func TestQueryInlineCondition(t *testing.T) {
+	user := models.User{}
+	result := db.Take(&user, "id = ?", 5)
+	assert.Nil(t, result.Error)
+	assert.Equal(t, 5, user.ID)
+}
+
+func TestQueryAllObject(t *testing.T) {
+	user := []models.User{}
+
+	// result := db.Where("id in ?", []string{"1", "2", "3", "4"}).Find(&user)
+
+	result := db.Find(&user, "id in ?", []string{"1", "2", "3", "4"})
+	assert.Nil(t, result.Error)
+	assert.Equal(t, 4, len(user))
+	// fmt.Println("user: ", user)
+}
+
+func TestQuerWhere(t *testing.T) {
+	var users []models.User
+
+	// kalau where lalu ada where lagi maka itu akan And
+	result := db.
+		Where("first_name like ?", "%mas%").
+		Where("password like ?", "%rahasia%").
+		Find(&users)
+	assert.Nil(t, result.Error)
+	fmt.Println(users)
+
+	// kalau where lalu ada or maka kondisi akan jadi or
+	users = []models.User{}
+
+	result = db.
+		Where("first_name like ?", "%mas%").
+		Or("password like ?", "%rahasia%").
+		Find(&users)
+
+	assert.Nil(t, result.Error)
+	fmt.Println("new users: ", users)
+}
+
+func TestNotQuer(t *testing.T) {
+	var users []models.User
+
+	result := db.Not("first_name like ?", "%nama ke%").
+		Where("first_name like ?", "%gusti%").
+		Find(&users)
+
+	assert.Nil(t, result.Error)
+	assert.Equal(t, 4, len(users))
+	fmt.Println(users)
+}
+
+func TestSelectField(t *testing.T) {
+	var users []models.User
+
+	result := db.Select("id", "first_name", "password").Find(&users)
+
+	assert.Nil(t, result.Error)
+
+	for _, user := range users {
+		assert.NotNil(t, user.ID)
+		assert.NotEqual(t, "", user.Name.FirstName)
+	}
+
+}
+
+func TestStructCondition(t *testing.T) {
+	// bisa digunakan untuk dinasmis where
+	// minusnya ga bisa ditambahkan or manual
+	userCondition := models.User{
+		Name: models.Name{
+			FirstName: "Mas",
+		},
+	}
+	var users []models.User
+	result := db.Where(userCondition).Find(&users)
+
+	assert.Nil(t, result.Error)
+	fmt.Println(userCondition)
 }

@@ -2,6 +2,7 @@
 
 
 ### PZN MATERI: https://docs.google.com/presentation/d/11NNdQj-3UkmkdQRPQC0CtzeDfLP-IsSiIfDbDmpfo_4/edit?usp=sharing
+### PZN SOURCE CODE: https://github.com/ProgrammerZamanNow/belajar-golang-gorm
 ### OFFICIAL DOCS: https://gorm.io/docs/
 
 ## 1. Apa itu GORM?
