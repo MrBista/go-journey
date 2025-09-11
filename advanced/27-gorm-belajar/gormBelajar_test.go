@@ -291,3 +291,26 @@ func TestUpdate(t *testing.T) {
 	result = db.Save(&user)
 	assert.Nil(t, result.Error)
 }
+
+func TestUpdateSelectedColumns(t *testing.T) {
+	var user models.User
+	findUser := db.Take(&user, "id = ?", 2)
+	assert.Nil(t, findUser.Error)
+
+	assert.NotNil(t, user.ID)
+
+	// ini tuk satu column
+	findUser.Update("password", "diubah passwordnya")
+
+	assert.Nil(t, findUser.Error)
+	assert.NotEqual(t, 0, findUser.RowsAffected)
+
+	findUser.Updates(map[string]interface{}{
+		"middle_name": "",
+		"last_name":   "Bratha",
+	})
+
+	assert.Nil(t, findUser.Error)
+	assert.NotEqual(t, 0, findUser.RowsAffected)
+
+}

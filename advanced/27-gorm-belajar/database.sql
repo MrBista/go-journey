@@ -32,3 +32,6 @@ ADD COLUMN last_name VARCHAR(100) AFTER middle_name;
 
 ALTER TABLE users
 ADD COLUMN middle_name VARCHAR(100) AFTER first_name;
+
+
+SELECT * FROM users;
