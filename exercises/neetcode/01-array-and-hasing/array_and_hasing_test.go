@@ -47,7 +47,30 @@ func isAnagram(s string, t string) bool {
 		return false
 	}
 
-	// countS, countT := make(map[rune]int), make(map[rune]int)
+	countS, countT := make(map[rune]int), make(map[rune]int)
+
+	for i, ch := range s {
+		countS[ch]++
+		countT[rune(t[i])]++
+	}
+
+	for k, v := range countS {
+		if countT[k] != v {
+			return false
+		}
+	}
 
 	return true
+}
+
+func TestAnagram(t *testing.T) {
+	// positif case
+	anagram1 := isAnagram("carrace", "racecar")
+	anagram2 := isAnagram("alur", "luar")
+	assert.Equal(t, true, anagram1)
+	assert.Equal(t, true, anagram2)
+
+	// negative case
+	anagramNegatife1 := isAnagram("acar", "banana")
+	assert.Equal(t, false, anagramNegatife1)
 }
